@@ -7,7 +7,7 @@ import {
   ContractProvider,
   Sender,
   SendMode,
-} from 'ton-core';
+} from "ton-core";
 
 export type TonContractConfig = {
   id: number;
@@ -34,13 +34,13 @@ export function tonContractConfigToCell(config: TonContractConfig): Cell {
 export class TonContract implements Contract {
   constructor(
     readonly address: Address,
-    readonly init?: { code: Cell; data: Cell },
+    readonly init?: { code: Cell; data: Cell }
   ) {}
 
   static createFormconfig(
     config: TonContractConfig,
     code: Cell,
-    workchain = 0,
+    workchain = 0
   ) {
     const data = tonContractConfigToCell(config);
     const init = { code, data };
@@ -65,7 +65,7 @@ export class TonContract implements Contract {
     name: Cell,
     price: bigint,
     description: Cell,
-    duration: number,
+    duration: number
   ) {
     const msg_body = beginCell()
       .storeUint(1, 32)
@@ -86,7 +86,7 @@ export class TonContract implements Contract {
   async sendDeposit(provider: ContractProvider, sender: Sender, value: bigint) {
     const msg_body = beginCell().storeUint(2, 32).endCell();
 
-    await provider.internal(sender, {
+    await provider?.internal(sender, {
       value,
       sendMode: SendMode.PAY_GAS_SEPARATELY,
       body: msg_body,
@@ -94,7 +94,7 @@ export class TonContract implements Contract {
   }
 
   async getData(provider: ContractProvider) {
-    const { stack } = await provider.get('get_contract_storage_data', []);
+    const { stack } = await provider.get("get_contract_storage_data", []);
 
     return {
       id: stack.readNumber(),
@@ -108,7 +108,7 @@ export class TonContract implements Contract {
   }
 
   async getBalance(provider: ContractProvider) {
-    const { stack } = await provider.get('balance', []);
+    const { stack } = await provider.get("balance", []);
 
     return {
       balance: stack.readNumber(),

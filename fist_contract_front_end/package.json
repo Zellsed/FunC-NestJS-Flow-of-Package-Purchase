@@ -18,6 +18,7 @@
     "ton": "^13.9.0",
     "ton-core": "^0.53.0",
     "ton-crypto": "^3.2.0",
+    "tonweb": "^0.0.66",
     "vite-plugin-node-polyfills": "^0.22.0"
   },
   "devDependencies": {
